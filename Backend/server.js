@@ -20,7 +20,16 @@ import academicYearRoutes from "./routes/academicYearRoutes.js";
 import { updateAcademicTermStatusAndStudents } from "./controllers/academicYearController.js";
 
 dotenv.config();
-connectDB();
+(async () => {
+  try {
+    await connectDB();
+    console.log("✅ MongoDB connected");
+  } catch(err) {
+    console.error("❌ MongoDB connection failed:", err.message);
+    // ไม่ exit process เพื่อให้ server run ต่อ
+  }
+})();
+
 
 const app = express();
 app.use(cors());
@@ -53,13 +62,21 @@ app.use("/api/pattern-requests", patternRequestRoutes);
 app.use("/api", metadataRoutes);
 app.use("/api/academic-years", academicYearRoutes);
 
-// 🔄 Auto-update สถานะภาคเรียนทุก 24 ชั่วโมง
-updateAcademicTermStatusAndStudents(); // รันครั้งแรกตอน start server
+try {
+  updateAcademicTermStatusAndStudents();
+} catch(err) {
+  console.error("Cron initial run failed:", err);
+}
 
 setInterval(() => {
-  console.log("🕐 [Cron] เริ่มอัพเดทสถานะภาคเรียน...");
-  updateAcademicTermStatusAndStudents();
-}, 24 * 60 * 60 * 1000); // ทุก 24 ชั่วโมง
+  try {
+    console.log("🕐 [Cron] เริ่มอัพเดทสถานะภาคเรียน...");
+    updateAcademicTermStatusAndStudents();
+  } catch(err) {
+    console.error("Cron error:", err);
+  }
+}, 24 * 60 * 60 * 1000);
+
 
 console.log("✅ [Cron] ตั้งค่า Auto-update สถานะภาคเรียนเรียบร้อย (ทุก 24 ชม.)");
 
@@ -69,7 +86,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message });
 });
 
-const PORT = process.env.PORT || 3300;
+const PORT = 10000 || 3300;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📚 Swagger Documentation: http://localhost:${PORT}/api-docs`);

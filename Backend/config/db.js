@@ -1,16 +1,11 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI,{
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }); // เอา options เก่าออก
-    console.log("MongoDB connected!");
+    await mongoose.connect("mongodb+srv://CourseFlow:CourseFlow@goodnight.0cnqphr.mongodb.net/courseflow?appName=GoodNight");
+    console.log("✅ MongoDB connected!");
   } catch (err) {
-    console.error("MongoDB connection failed:", err.message);
+    console.error("❌ MongoDB connection failed:", err.message);
     process.exit(1);
   }
 };
