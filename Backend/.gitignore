@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Env files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Coverage (ถ้ามี)
+coverage/
+
+# Local database (MongoDB หรือ SQLite)
+*.db
+*.sqlite
