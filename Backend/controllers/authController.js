@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import { ERROR_CODES, createErrorResponse, createSuccessResponse } from "../utils/errorCodes.js";
 
+
 // Generate JWT
 const generateToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {

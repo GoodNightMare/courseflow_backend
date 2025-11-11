@@ -86,7 +86,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message });
 });
 
-const PORT = 10000 || 3300;
+const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📚 Swagger Documentation: http://localhost:${PORT}/api-docs`);
