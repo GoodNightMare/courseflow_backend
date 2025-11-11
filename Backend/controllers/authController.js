@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import { ERROR_CODES, createErrorResponse, createSuccessResponse } from "../utils/errorCodes.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 // Generate JWT

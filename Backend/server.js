@@ -20,6 +20,7 @@ import academicYearRoutes from "./routes/academicYearRoutes.js";
 import { updateAcademicTermStatusAndStudents } from "./controllers/academicYearController.js";
 
 dotenv.config();
+
 (async () => {
   try {
     await connectDB();
