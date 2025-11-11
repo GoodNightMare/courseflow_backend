@@ -7,6 +7,7 @@ import { ERROR_CODES, createErrorResponse, createSuccessResponse } from "../util
 
 // Generate JWT
 const generateToken = (id, role) => {
+  console.log("🔑 JWT Secret:", process.env.JWT_SECRET);
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || "1h",
   });
